@@ -122,7 +122,7 @@ SECURE_PROXY_SSL_HEADER = tuple(SECURE_PROXY_SSL_HEADER_RAW)
 USE_X_FORWARDED_HOST = config("USE_X_FORWARDED_HOST", cast=bool)
 
 # Add this line to trust your Render domain for POST requests and CSRF validation
-CSRF_TRUSTED_ORIGINS = ['wtm-library-test.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://wtm-library-test.onrender.com']
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 
