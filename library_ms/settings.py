@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import config
+from decouple import config,Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY",cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG",cast=bool)
 
-ALLOWED_HOSTS = ["https://wtm-library-test.onrender.com/","127.0.0.1","localhost","localhost:8000"]
+ALLOWED_HOSTS = ["wtm-library-test.onrender.com","127.0.0.1","localhost","localhost:8000"]
 
 
 # Application definition
@@ -115,6 +115,11 @@ DATABASES = {
     }
 }
 
+# SSL / Proxy Headers
+SECURE_PROXY_SSL_HEADER_RAW = config("SECURE_PROXY_SSL_HEADER", cast=Csv())
+SECURE_PROXY_SSL_HEADER = tuple(SECURE_PROXY_SSL_HEADER_RAW)
+
+USE_X_FORWARDED_HOST = config("USE_X_FORWARDED_HOST", cast=bool)
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
