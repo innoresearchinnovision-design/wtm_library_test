@@ -1,6 +1,5 @@
 {% extends "base/master.html" %}
 {% block content %}
-
 <!-- Welcome Banner Card -->
 <div
   class="bg-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -26,6 +25,7 @@
       <p class="text-xl font-bold text-slate-800">{{total_books}} Books</p>
     </div>
   </div>
+  {% if request.user.is_superuser %}
   <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
     <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold"><i
         class="fa-solid fa-book"></i></div>
@@ -42,12 +42,13 @@
       <p class="text-xl font-bold text-slate-800">{{total_genres}} Genres</p>
     </div>
   </div>
+  {% endif %}
   <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
     <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold"><i
         class="fa-solid fa-book"></i></div>
     <div>
       <p class="text-xs font-medium text-slate-500">Total Borrowed</p>
-      <p class="text-xl font-bold text-slate-800">4 Books</p>
+      <p class="text-xl font-bold text-slate-800">{{total_borrowed_book}} Books</p>
     </div>
   </div>
   <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
@@ -95,13 +96,14 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-100 text-sm">
+        {% for borrow in borrowed_books %}
         <tr class="hover:bg-slate-50/50 transition-colors">
           <td class="py-4 px-6 font-medium text-slate-900">
-            Harry Potter - The Secret Chamber
-            <span class="block sm:hidden text-xs text-slate-400 font-normal mt-0.5">Req: Oct 12, 2026</span>
+            {{borrow.book.title}}
+            <span class="block sm:hidden text-xs text-slate-400 font-normal mt-0.5">Req: {{borrow.date_of_request}}</span>
           </td>
-          <td class="hidden sm:table-cell py-4 px-6 text-slate-600">2026-10-12</td>
-          <td class="hidden md:table-cell py-4 px-6 text-slate-600">2026-10-25</td>
+          <td class="hidden sm:table-cell py-4 px-6 text-slate-600">{{borrow.book_date_request}}</td>
+          <td class="hidden md:table-cell py-4 px-6 text-slate-600">{{borrow.book_date_return}}</td>
           <td class="py-4 px-6">
             <span
               class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">Borrowed</span>
@@ -109,7 +111,8 @@
           <td class="py-4 px-6 text-right whitespace-nowrap">
             <button class="text-xs font-medium text-rose-600 hover:underline">Cancel</button>
           </td>
-        </tr>
+        </tr>  
+        {% endfor %}
       </tbody>
     </table>
   </div>
