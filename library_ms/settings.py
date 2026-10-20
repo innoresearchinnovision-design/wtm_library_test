@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from decouple import config,Csv
 import dj_database_url
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +41,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf_yasg",
+    #3rd party application
+    # "drf_yasg",
+    "drf_spectacular",
     "rest_framework",
+    "rest_framework_simplejwt",
     "author",  # Author application registered in the project.settings file telling django project that author application has created
     "home_app",
     "book_app",
@@ -51,6 +55,27 @@ INSTALLED_APPS = [
     "debug_toolbar", # external library for debugging django application
 
 ]
+
+REST_FRAMEWORK={
+    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_SCHEMA_CLASS":"drf_spectacular.openapi.AutoSchema",
+}
+
+SIMPLE_JWT={
+    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME":timedelta(days=1),
+    "ROTATE_REFRESH_TOKEN":False,
+    "BLACKLIST_AFTER_ROTATION":True,
+
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your wtm-backend-library-app API',
+    'DESCRIPTION': 'Library management system',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
