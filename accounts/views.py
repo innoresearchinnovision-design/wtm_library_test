@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from .models import UserProfile
 # Create your views here.
 
@@ -24,7 +25,10 @@ def login_view(request):
         if login_form.is_valid():
             user = login_form.get_user()
             login(request,user)
+            messages.success(request,"Successfully Logged In")
             return redirect("home:index")
+        else:
+            messages.error(request,"Invalid username or password. Please tryagain.!")
     else:
         login_form = LoginForm()
 
@@ -42,6 +46,7 @@ def registration_view(request):
             create_user=registration_form.save()
             create_user.save()
             UserProfile.objects.create(user=create_user)
+            messages.success(request,"Successfully created acccount, Try Logging In")
             return redirect("accounts:login")
     else:
         registration_form = RegistrationForm()
