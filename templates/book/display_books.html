@@ -8,10 +8,12 @@
                 <h2 class="text-lg sm:text-xl font-bold text-slate-900">Books Management</h2>
                 <p class="text-xs text-slate-500 mt-0.5">Manage library catalog inventory and records.</p>
             </div>
-            <button id="open-modal-btn" class="w-full sm:w-auto px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+            {% if request.user.is_superuser %}
+              <button id="open-modal-btn" class="w-full sm:w-auto px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-plus"></i>
                 <span>Add New Book</span>
             </button>
+            {% endif %}
         </div>
 
         <!-- Adaptive Responsive Data Table Card -->
@@ -35,7 +37,9 @@
                             
                             <!-- Always visible -->
                             <th class="py-3.5 px-6">Status</th>
-                            <th class="py-3.5 px-6 text-right">Actions</th>
+                           {% if request.user.is_staff %}
+                              <th class="py-3.5 px-6 text-right">Actions</th>
+                           {% endif %}
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 text-sm">
@@ -61,7 +65,7 @@
                             <td class="py-4 px-6">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">{{book.get_status_display}}</span>
                             </td>
-                            
+                            {% if request.user.is_staff %}
                             <!-- Actions (Always visible) -->
                             <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
                                 <a href="{% url 'books_app:update_book' book.id %}" class="text-slate-400 hover:text-indigo-600 p-1.5 transition-colors inline-block" title="Edit">
@@ -71,6 +75,7 @@
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>
