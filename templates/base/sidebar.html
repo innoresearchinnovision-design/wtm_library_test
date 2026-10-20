@@ -26,7 +26,7 @@
     <a href="{% url 'books_app:display_books' %}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors {% if request.resolver_match.url_name == 'display_books' %}bg-indigo-600 text-white shadow-lg shadow-indigo-600/30{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
         <i class="fa-solid fa-book w-5"></i><span>Books Catalog</span>
     </a>
-
+    {% if request.user.is_superuser %}
     <!-- Authors -->
     <a href="{% url 'display_authors' %}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors {% if request.resolver_match.url_name == 'display_authors' %}bg-indigo-600 text-white shadow-lg shadow-indigo-600/30{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
         <i class="fa-solid fa-feather w-5"></i><span>Authors</span>
@@ -36,7 +36,7 @@
     <a href="{% url 'genres:display_genre' %}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors {% if request.resolver_match.url_name == 'display_genre' %}bg-indigo-600 text-white shadow-lg shadow-indigo-600/30{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
         <i class="fa-solid fa-tags w-5"></i><span>Genres</span>
     </a>
-
+     {% endif %}
     <!-- Make a Request -->
     <a href="{% url 'books_app:book_request' %}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors {% if request.resolver_match.url_name == 'book_request' %}bg-indigo-600 text-white shadow-lg shadow-indigo-600/30{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
         <i class="fa-solid fa-bookmark w-5"></i><span>Make a Request</span>
