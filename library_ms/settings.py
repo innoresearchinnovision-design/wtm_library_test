@@ -130,24 +130,24 @@ WSGI_APPLICATION = "library_ms.wsgi.application"
 #     }
 # }
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{os.path.join(BASE_DIR,"db.sqlite3")}",
-        conn_max_age=600,
-        conn_health_checks=True
-    )
-}
-
 # DATABASES = {
-#     "default": {
-#         "ENGINE": config("DB_ENGINE"),
-#         "NAME": config("DB_NAME"),
-#         "USER": config("DB_USER"),
-#         "PASSWORD": config("DB_PASSWORD"),
-#         "HOST": config("DB_HOST"),
-#         "PORT": config("DB_PORT"),
-#     }
+#     "default": dj_database_url.config(
+#         default=f"sqlite:///{os.path.join(BASE_DIR,"db.sqlite3")}",
+#         conn_max_age=600,
+#         conn_health_checks=True
+#     )
 # }
+
+DATABASES = {
+    "default": {
+        "ENGINE": config("DB_ENGINE"),
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    }
+}
 
 # SSL / Proxy Headers
 SECURE_PROXY_SSL_HEADER_RAW = config("SECURE_PROXY_SSL_HEADER", cast=Csv())
